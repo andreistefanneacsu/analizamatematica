@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+  --blue-dark: #0d3b66;
+  --blue-light: #3da5d9;
+  --background-light: #f5f7fa;
+  --text-light: #111;
+  --background-dark: #121212;
+  --text-dark: #e0e0e0;
+  --container-bg-light: #fff;
+  --container-bg-dark: #1e1e1e;
+  --button-bg: #3da5d9;
+  --button-hover-bg: #0d3b66;
+  --button-text-color: #fff;
+  --note-color: orange;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Header & nav */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--blue-dark);
+  color: white;
+  flex-wrap: wrap; /* for better responsiveness */
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  white-space: nowrap;
+}
+
+nav a.active,
+nav a:hover {
+  background-color: var(--blue-light);
+  color: white;
+}
+
+nav button#mode-toggle {
+  margin-left: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.3rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+nav button#mode-toggle:hover {
+  background-color: var(--blue-light);
+}
+
+.mode-icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Container & content boxes */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  background: var(--container-bg-light);
+  color: var(--text-light);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark .container {
+  background: var(--container-bg-dark);
+  color: var(--text-dark);
+}
+
+/* Details inside home */
+.details p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+/* Contact section */
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.contact-info .person {
+  flex: 1 1 250px;
+  background: var(--blue-light);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 2px 8px rgba(61,165,217,0.4);
+}
+
+.contact-info .person h2 {
+  margin-top: 0;
+  border-bottom: 2px solid rgba(255 255 255 / 0.3);
+  padding-bottom: 0.3rem;
+}
+
+.contact-info .person a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Buttons */
+.drive-button,
+.feedback-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  padding: 0.7rem 1.3rem;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgb(61 165 217 / 0.4);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-top: 1rem;
+  color: var(--button-text-color);
+}
+
+.drive-button {
+  background-color: var(--button-bg);
+}
+
+.drive-button svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.drive-button:hover {
+  background-color: var(--button-hover-bg);
+  box-shadow: 0 6px 14px rgb(13 59 102 / 0.7);
+}
+
+.feedback-button {
+  background-color: #ff9900;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.feedback-button:hover {
+  background-color: #cc7a00;
+}
+
+/* Table styling for syllabus */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+thead {
+  background-color: var(--blue-dark);
+  color: white;
+}
+
+th, td {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+body.dark thead {
+  background-color: #0b2c4a;
+  color: var(--text-dark);
+}
+
+body.dark th,
+body.dark td {
+  border-color: #444;
+}
+
+/* Announcements */
+.announcement {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+body.dark .announcement {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+.announcement h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+.announcement p {
+  margin: 0.5rem 0;
+}
+
+/* FAQ */
+.faq-item {
+  border-left: 4px solid var(--blue-light);
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+
+.faq-item h3.question {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--blue-dark);
+  transition: color 0.3s;
+}
+
+body.dark .faq-item h3.question {
+  color: var(--text-dark);
+}
+
+.faq-item p.answer {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+body.dark .faq-item p.answer {
+  color: var(--text-dark);
+}
+
+.faq-item p.answer a {
+  color: var(--blue-light);
+  text-decoration: underline;
+}
+
+.faq-item p.answer a:hover {
+  color: var(--blue-dark);
+}
+
+/* Note with icon */
+.note {
+  font-size: 1rem;
+  color: var(--note-color);
+  font-weight: 600;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.icon-note {
+  width: 20px;
+  height: 20px;
+  stroke: var(--note-color);
+  fill: var(--note-color);
+  margin-right: 0.5rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem 2rem;
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 3rem;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .contact-info {
+    flex-direction: column;
+  }
+  nav a {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+  }
+}
