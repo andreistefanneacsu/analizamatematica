@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mock Exam Portal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { background: linear-gradient(to right, #eef2ff, #f5f3ff); }
+.timer { font-weight: bold; color: #4338ca; display: none; }
+section { transition: all 0.4s ease; }
+.fade-out { opacity: 0; transform: scale(0.95); pointer-events: none; }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+<div id="app" class="w-full max-w-3xl bg-white shadow-2xl rounded-3xl p-8 space-y-6">
+  <h1 class="text-3xl font-bold text-center text-indigo-700 mb-6">🎓 Mock Exam Portal</h1>
+
+  <!-- LOGIN -->
+  <div id="login" class="space-y-4">
+    <label class="block text-gray-700 font-medium">Username</label>
+    <input id="username" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-400 outline-none" />
+
+    <label class="block text-gray-700 font-medium">Password</label>
+    <input id="password" type="password" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-400 outline-none" />
+
+    <button onclick="login()" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl hover:bg-indigo-700 transition">Login</button>
+    <p id="loginError" class="text-red-600 font-medium"></p>
+  </div>
+
+  <!-- EXAM -->
+  <div id="exam" class="hidden space-y-6">
+    <div class="flex justify-between items-center">
+      <h2 id="welcome" class="text-xl font-semibold text-indigo-800"></h2>
+      <button onclick="logout()" class="px-4 py-2 bg-red-100 text-red-700 font-medium rounded-xl hover:bg-red-200 transition">Logout</button>
+    </div>
+
+    <!-- Theory Section -->
+    <section id="theorySection" class="p-5 bg-indigo-50 rounded-2xl shadow-md space-y-3">
+      <h3 class="text-lg font-semibold text-indigo-700">📚 Theory Section <span id="theoryTimer" class="ml-2 timer">00:00</span></h3>
+      <button id="startTheory" onclick="startTimer('theory')" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Start Theory</button>
+      <div id="theoryPdfContainer" class="hidden">
+        <iframe id="theoryPdf" class="w-full h-96 rounded-xl border"></iframe>
+      </div>
+    </section>
+
+    <!-- Exercises Section -->
+    <section id="exSection" class="p-5 bg-purple-50 rounded-2xl shadow-md space-y-3">
+      <h3 class="text-lg font-semibold text-purple-700">📝 Exercises Section <span id="exTimer" class="ml-2 timer">00:00</span></h3>
+      <button id="startEx" onclick="startTimer('ex')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">Start Exercises</button>
+      <div id="exPdfContainer" class="hidden">
+        <iframe id="exPdf" class="w-full h-96 rounded-xl border"></iframe>
+      </div>
+    </section>
+
+    <!-- Finish Message -->
+    <div id="finished" class="hidden p-5 bg-green-50 rounded-2xl shadow-md text-center text-green-800 font-medium space-y-4">
+      <p>✅ Exam finished! Thank you, <span id="userNameEnd" class="font-semibold"></span>.</p>
+      <button id="resetExamBtn" onclick="resetExamAttempt()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 transition hidden">Take Another Attempt</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- USERS ---
+const USERS = {
+  admin: { password: "admin", group: "N/A", name: "N/A", tries: Infinity, infinite: true },
+  asneacsu: { password: "domnututorepa55", group: "262", name: "Andrei Stefan Neacsu", tries: 10 },
+  asnituica: { password: "domnututorepa55", group: "262", name: "Andrei Sebastian Nituica", tries: 10 },
+  acbirlogeanu: { password: "domnustudentpa55", group: "262", name: "Andrei Cristian Birlogeanu", tries: 3 }
+};
+
+// --- PDF GROUPS ---
+const GROUPS = {
+  262: {
+    theory: { duration: 1, pdfs: ["https://drive.google.com/file/d/1CJTHKnp9wsy-yJa7dJKxhAoMewq109mu/view?usp=sharing"] },
+    ex: { duration: 1, pdfs: ["https://drive.google.com/file/d/1b6HHfKMhs7DTxxS8h94pV-418UoY-oC5/view?usp=sharing"] }
+  },
+
+  A: {
+    theory: { duration: 1, pdfs: ["https://drive.google.com/file/d/1abc123456789/view?usp=sharing"] },
+    ex: { duration: 1, pdfs: ["https://drive.google.com/file/d/1def987654321/view?usp=sharing"] }
+  },
+  B: {
+    theory: { duration: 1, pdfs: ["https://drive.google.com/file/d/2abc111222333/view?usp=sharing"] },
+    ex: { duration: 1, pdfs: ["https://drive.google.com/file/d/2ghi777888999/view?usp=sharing"] }
+  }
+};
+
+// --- HELPERS ---
+function getDeviceId() {
+  const f = navigator.userAgent + screen.width + screen.height + Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return btoa(f);
+}
+function getStorageKey(u) {
+  return "tries_" + u + "_" + getDeviceId();
+}
+
+// --- STATE ---
+let currentUser = null;
+let timers = { theory: null, ex: null };
+let remaining = { theory: 0, ex: 0 };
+let finishedSections = { theory: false, ex: false };
+
+// --- LOGIN ---
+function login() {
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
+  const info = USERS[u];
+  const err = document.getElementById("loginError");
+
+  if (!info || info.password !== p) { err.textContent = "Invalid credentials!"; return; }
+
+  const used = Number(localStorage.getItem(getStorageKey(u)) || 0);
+  err.textContent = "";
+
+  currentUser = { username: u, group: info.group, name: info.name, tries: info.tries, used, infinite: info.infinite };
+
+  if (!info.infinite && used >= info.tries) {
+    err.textContent = "No more exam attempts left!";
+    return;
+  }
+
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("exam").classList.remove("hidden");
+
+  const attemptsText = info.infinite ? "∞" : `${used}/${info.tries}`;
+  document.getElementById("welcome").textContent = `Welcome ${info.name} (Group ${info.group}) — Attempt ${attemptsText}`;
+
+  resetExamUI();
+}
+
+// --- LOGOUT ---
+function logout() {
+  clearInterval(timers.theory);
+  clearInterval(timers.ex);
+  currentUser = null;
+  document.getElementById("exam").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+}
+
+// --- RESET UI ---
+function resetExamUI() {
+  finishedSections = { theory: false, ex: false };
+  remaining = { theory: 0, ex: 0 };
+  document.getElementById("finished").classList.add("hidden");
+  document.getElementById("resetExamBtn").classList.add("hidden");
+
+  ["theory", "ex"].forEach(s => {
+    document.getElementById("start" + (s === "theory" ? "Theory" : "Ex")).classList.remove("hidden");
+    document.getElementById(s + "PdfContainer").classList.add("hidden");
+    const t = document.getElementById(s + "Timer");
+    t.style.display = "none";
+    t.textContent = "00:00";
+  });
+}
+
+// --- TIMER START ---
+function startTimer(section) {
+  const g = currentUser.infinite ? getAllGroupPDFs(section) : GROUPS[currentUser.group][section];
+  const dur = g.duration * 60;
+  remaining[section] = dur;
+
+  const timerEl = document.getElementById(section + "Timer");
+  const startBtn = document.getElementById("start" + (section === "theory" ? "Theory" : "Ex"));
+  const pdfC = document.getElementById(section + "PdfContainer");
+  const frame = document.getElementById(section + "Pdf");
+
+  startBtn.classList.add("hidden");
+  timerEl.style.display = "inline";
+  const pdf = g.pdfs[Math.floor(Math.random() * g.pdfs.length)];
+  frame.src = pdf.replace("/view", "/preview");
+  pdfC.classList.remove("hidden");
+
+  timers[section] = setInterval(() => {
+    remaining[section]--;
+    const m = String(Math.floor(remaining[section] / 60)).padStart(2, "0");
+    const s = String(remaining[section] % 60).padStart(2, "0");
+    timerEl.textContent = `${m}:${s}`;
+
+    if (remaining[section] <= 0) {
+      clearInterval(timers[section]);
+      pdfC.classList.add("hidden");
+      frame.src = "";
+      endSection(section);
+    }
+  }, 1000);
+}
+
+// --- Get PDFs from all groups (admin only) ---
+function getAllGroupPDFs(section) {
+  const allPDFs = [];
+  for (const g in GROUPS) {
+    allPDFs.push(...GROUPS[g][section].pdfs);
+  }
+  return { duration: 1, pdfs: allPDFs };
+}
+
+// --- END SECTION ---
+function endSection(section) {
+  finishedSections[section] = true;
+  checkIfFinished();
+}
+
+// --- FINISH CHECK ---
+function checkIfFinished() {
+  if (finishedSections.theory && finishedSections.ex) {
+    let btn = document.getElementById("finishExamBtn");
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.id = "finishExamBtn";
+      btn.textContent = "✅ Finish Exam";
+      btn.className = "w-full bg-green-600 text-white font-semibold py-3 rounded-xl hover:bg-green-700 transition";
+      btn.onclick = finishExam;
+      document.getElementById("exam").appendChild(btn);
+    }
+    btn.classList.remove("hidden");
+  }
+}
+
+// --- FINISH EXAM ---
+function finishExam() {
+  if (!currentUser.infinite) {
+    const key = getStorageKey(currentUser.username);
+    const prev = Number(localStorage.getItem(key) || 0);
+    const max = currentUser.tries;
+    if (prev < max) localStorage.setItem(key, prev + 1);
+  }
+
+  document.getElementById("userNameEnd").textContent = currentUser.name;
+  document.getElementById("finished").classList.remove("hidden");
+
+  const btn = document.getElementById("finishExamBtn");
+  if (btn) btn.classList.add("hidden");
+
+  if (!currentUser.infinite) {
+    const used = Number(localStorage.getItem(getStorageKey(currentUser.username)) || 0);
+    if (used < currentUser.tries) document.getElementById("resetExamBtn").classList.remove("hidden");
+  } else {
+    document.getElementById("resetExamBtn").classList.remove("hidden");
+  }
+}
+
+// --- RESET ATTEMPT ---
+function resetExamAttempt() {
+  resetExamUI();
+  const used = currentUser.infinite ? "∞" : Number(localStorage.getItem(getStorageKey(currentUser.username)));
+  const total = currentUser.infinite ? "∞" : currentUser.tries;
+  document.getElementById("welcome").textContent = `Welcome ${currentUser.name} (Group ${currentUser.group}) — Attempt ${used}/${total}`;
+}
+</script>
+
+</body>
+</html>
