@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Access - Mock Exam Portal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { 
+    background: linear-gradient(to right, #eef2ff, #f5f3ff);
+}
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+<div class="w-full max-w-3xl bg-white shadow-2xl rounded-3xl p-8 space-y-6">
+    <h1 class="text-3xl font-bold text-center text-indigo-700 mb-4">Request Access</h1>
+    <p class="text-center text-gray-700 mb-6">
+        To use the Mock Exam Platform, please contact one of our tutors below to get access.
+    </p>
+
+    <!-- Tutor Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="card p-4 bg-indigo-50 rounded-2xl flex flex-col items-center text-center">
+            <img src="https://img.icons8.com/ios-filled/100/000000/teacher.png" alt="Tutor" class="w-16 h-16 mb-3">
+            <h2 class="font-semibold text-indigo-800">Andrei Stefan Neacsu</h2>
+            <p class="text-gray-600 mt-1">Email: <a href="mailto:andrei-stefan.neacsu@s.unibuc.ro" class="text-indigo-600 hover:underline">andrei-stefan.neacsu@s.unibuc.ro</a></p>
+        </div>
+        <div class="card p-4 bg-indigo-50 rounded-2xl flex flex-col items-center text-center">
+            <img src="https://img.icons8.com/ios-filled/100/000000/teacher.png" alt="Tutor" class="w-16 h-16 mb-3">
+            <h2 class="font-semibold text-indigo-800">Andrei Sebastian Nituica</h2>
+            <p class="text-gray-600 mt-1">Email: <a href="mailto:andrei-sebastian.nituica@s.unibuc.ro" class="text-indigo-600 hover:underline">andrei-sebastian.nituica@s.unibuc.ro</a></p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-8">
+        <button onclick="goBack()" class="bg-gray-200 text-gray-700 font-medium py-2 px-6 rounded-xl hover:bg-gray-300 transition">
+            ← Back to Login
+        </button>
+    </div>
+</div>
+
+<footer class="mt-8 text-gray-500 text-sm text-center">
+    University of Bucharest — Faculty of Mathematics and Computer Science
+</footer>
+
+<script>
+function goBack(){
+    window.location.href = "mock-exam.html"; // sau calea către pagina de login
+}
+</script>
+
+</body>
+</html>
