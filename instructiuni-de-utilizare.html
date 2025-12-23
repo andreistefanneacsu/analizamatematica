@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Mock Exam – Analiză Matematică | UNIBUC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --background: #f1f5f9;
+            --card-bg: #ffffff;
+            --text: #1f2933;
+            --muted: #6b7280;
+            --warning-bg: #fff7ed;
+            --warning-border: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 30px 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .step {
+            background-color: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .step h3 {
+            margin-top: 0;
+            font-size: 1.05rem;
+            color: var(--primary);
+        }
+
+        .step p {
+            margin: 8px 0 0;
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        a {
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .timer-box {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer {
+            flex: 1;
+            min-width: 200px;
+            background: #eef2ff;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .timer span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .warning {
+            background-color: var(--warning-bg);
+            border-left: 6px solid var(--warning-border);
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .warning p {
+            margin: 10px 0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mock Exam – Analiză Matematică</h1>
+    <p>Platformă de simulare pentru studenți UNIBUC</p>
+</header>
+
+<main>
+
+    <section class="card">
+        <h2>Instrucțiuni de utilizare</h2>
+
+        <div class="steps">
+            <div class="step">
+                <h3>🔐 Autentificare</h3>
+                <p>
+                    Accesul se face folosind credențialele furnizate.
+                    Dacă nu ai acces, poți trimite o cerere prin
+                    <a href="request-accesss.html">Request Access</a>.
+                </p>
+            </div>
+
+            <div class="step">
+                <h3>📊 Încercări disponibile</h3>
+                <p>
+                    Numărul de încercări rămase este afișat permanent
+                    în colțul din dreapta sus al ecranului.
+                </p>
+            </div>
+
+            <div class="step">
+                <h3>⏱️ Desfășurarea examenului</h3>
+                <p>
+                    După începerea examenului, un timer este afișat pentru
+                    fiecare secțiune.
+                </p>
+
+                <div class="timer-box">
+                    <div class="timer">
+                        <span>10 min</span>
+                        Teorie
+                    </div>
+                    <div class="timer">
+                        <span>50 min</span>
+                        Exerciții
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>⏭️ Finalizare</h3>
+                <p>
+                    Dacă finalizezi mai devreme o secțiune, aceasta poate fi sărită.
+                    După <strong>Finish Exam</strong>, rezolvările sunt încărcate,
+                    iar un nou examen poate fi început dacă mai există încercări.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Disclaimer</h2>
+        <div class="warning">
+            <p>
+                Platforma este utilizată în context academic de studenți ai
+                Universității din București (UNIBUC), însă nu garantează
+                obținerea unui rezultat la examenul real.
+            </p>
+            <p>
+                Rezolvarea testelor nu oferă punctaj oficial și nu influențează
+                evaluarea academică.
+            </p>
+            <p>
+                Nu există nicio certitudine că subiecte similare vor apărea
+                la examenul real.
+            </p>
+            <p>
+                Platforma are scop exclusiv educațional și de autoevaluare.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    © 2025 · Mock Exam Analiză Matematică · UNIBUC
+</footer>
+
+</body>
+</html>
