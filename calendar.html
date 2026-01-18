@@ -17,7 +17,7 @@
         }
 
         .page-header {
-            background: #4a6cf7;
+            background: #1e3a8a;
             color: white;
             padding: 40px 20px;
             text-align: center;
@@ -65,6 +65,26 @@
     <div id="calendar"></div>
 </div>
 
+<footer class="site-footer">
+  <center>
+    <div class="footer-left">
+      © 2026 Analiză Matematică. Toate drepturile rezervate!
+    </div>
+
+    <div class="footer-links">
+      <a href="https://www.unibuc.ro" target="_blank" rel="noopener noreferrer">Universitatea din București</a>
+      <span>•</span>
+      <a href="https://fmi.unibuc.ro" target="_blank" rel="noopener noreferrer">Facultatea de Matematică și Informatică</a>
+    </div>
+
+    <div class="footer-right">
+      Developed by
+      <a href="https://devcoreenterprise.pages.dev" target="_blank" rel="noopener noreferrer">DevCore Enterprise</a>
+    </div>
+  </center>
+</footer>
+
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
 <script>
@@ -101,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	    { title:'Curs Analiză Matematică',    start:'2025-12-05T14:00', end:'2025-12-05T16:00', type:'curs', sala:'501' },
 	    { title:'Curs Analiză Matematică',    start:'2025-12-12T14:00', end:'2025-12-12T16:00', type:'curs', sala:'501' },
 	    { title:'Curs Analiză Matematică',    start:'2025-12-19T14:00', end:'2025-12-19T16:00', type:'curs', sala:'501' },
+	    { title:'Curs Analiză Matematică',    start:'2026-01-09T14:00', end:'2026-01-09T16:00', type:'curs', sala:'501' },
+	    { title:'Curs Analiză Matematică',    start:'2026-01-16T14:00', end:'2025-01-16T16:00', type:'curs', sala:'501' },
 
             { title:'Seminar Analiză Matematică', start:'2025-10-03T10:00', end:'2025-10-03T12:00', type:'seminar', grupa:'164', sala:'111' },
             { title:'Seminar Analiză Matematică', start:'2025-10-03T12:00', end:'2025-10-03T14:00', type:'seminar', grupa:'163', sala:'107' },
@@ -161,6 +183,17 @@ document.addEventListener('DOMContentLoaded', function() {
             { title:'Seminar Analiză Matematică', start:'2025-12-19T12:00', end:'2025-12-19T14:00', type:'seminar', grupa:'163', sala:'107' },
             { title:'Seminar Analiză Matematică', start:'2025-12-19T16:00', end:'2025-12-19T18:00', type:'seminar', grupa:'161', sala:'107' },
 
+	    { title:'Seminar Analiză Matematică', start:'2025-12-23T08:00', end:'2025-12-23T10:00', type:'seminar', grupa:'162', },
+
+            { title:'Seminar Analiză Matematică', start:'2026-01-09T10:00', end:'2026-01-09T12:00', type:'seminar', grupa:'164', sala:'111' },
+            { title:'Seminar Analiză Matematică', start:'2026-01-09T12:00', end:'2026-01-09T14:00', type:'seminar', grupa:'163', sala:'107' },
+            { title:'Seminar Analiză Matematică', start:'2026-01-09T16:00', end:'2026-01-09T18:00', type:'seminar', grupa:'161', sala:'107' },
+
+	    { title:'Seminar Analiză Matematică', start:'2026-01-13T10:00', end:'2026-01-13T12:00', type:'seminar', grupa:'162', sala:'108' },
+            { title:'Seminar Analiză Matematică', start:'2026-01-16T10:00', end:'2026-01-16T12:00', type:'seminar', grupa:'164', sala:'111' },
+            { title:'Seminar Analiză Matematică', start:'2026-01-16T12:00', end:'2026-01-16T14:00', type:'seminar', grupa:'163', sala:'107' },
+            { title:'Seminar Analiză Matematică', start:'2026-01-16T16:00', end:'2026-01-16T18:00', type:'seminar', grupa:'161', sala:'107' },
+
             { title:'Tutoriat Analiză Matematică', start:'2025-10-21T12:00', end:'2025-10-21T14:00', type:'tutoriat', sala:'209' },
             { title:'Tutoriat Analiză Matematică', start:'2025-10-27T18:00', end:'2025-10-27T20:00', type:'tutoriat', sala:'102' },
             { title:'Tutoriat Analiză Matematică', start:'2025-11-04T12:00', end:'2025-11-04T14:00', type:'tutoriat', sala:'209' },
@@ -170,7 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { title:'Tutoriat Analiză Matematică', start:'2025-12-02T12:00', end:'2025-12-02T14:00', type:'tutoriat', sala:'209' },
             { title:'Tutoriat Analiză Matematică', start:'2025-12-09T12:00', end:'2025-12-09T14:00', type:'tutoriat', sala:'209' },
             { title:'Tutoriat Analiză Matematică', start:'2025-12-16T12:00', end:'2025-12-16T14:00', type:'tutoriat', sala:'209' },
-            { title:'Tutoriat Analiză Matematică', start:'2025-12-23T10:00', end:'2025-12-23T13:00', type:'tutoriat' }
+            { title:'Tutoriat Analiză Matematică', start:'2025-12-23T10:00', end:'2025-12-23T14:00', type:'tutoriat' },
+            { title:'Tutoriat Analiză Matematică', start:'2026-01-13T12:00', end:'2026-01-13T14:00', type:'tutoriat', sala:'209' }
         ],
 
         eventDidMount: function(info) {
